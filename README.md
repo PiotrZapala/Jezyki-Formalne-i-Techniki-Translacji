@@ -1,1 +1,1 @@
-# Jezyki-Formalne-i-Techniki-Translacji
+# Jezyki Formalne i Techniki Translacji
