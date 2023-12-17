@@ -16,7 +16,7 @@
     int mul(int a, int b, int p);
     int divide(int a, int b, int p);
     int power(long long a, int b, int p);
-    int extendedEuclideanAlgorithm(int a, int b, int *x, int *y);
+    int extended_euclidean_algorithm(int a, int b, int *x, int *y);
     void yyerror(char const*);
     const int p1 = 1234577;
     const int p2 = 1234576;
@@ -168,7 +168,7 @@ int mul(int a, int b, int p) {
 int divide(int a, int b, int p) {
     int x, y;
     long long inv;
-    int g = extendedEuclideanAlgorithm(b, p, &x, &y);
+    int g = extended_euclidean_algorithm(b, p, &x, &y);
     if (g != 1)
         inv = -1;
     else
@@ -192,13 +192,13 @@ int power(long long a, int b, int p) {
     return result;
 }
 
-int extendedEuclideanAlgorithm(int a, int b, int *x, int *y) {
+int extended_euclidean_algorithm(int a, int b, int *x, int *y) {
         if (a == 0){
             *x = 0, *y = 1;
             return b;
         }
         int x1, y1;
-        int gcd = extendedEuclideanAlgorithm(b%a, a, &x1, &y1);
+        int gcd = extended_euclidean_algorithm(b%a, a, &x1, &y1);
         *x = y1 - (b/a) *x1;
         *y = x1;
         return gcd;

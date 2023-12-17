@@ -1,23 +1,25 @@
 %{
 #include <stdio.h>
-int lines = 0;
-int words = 0;
+
+int num_words = 0;
+int num_lines = 1;
+
 %}
+
 %%
-^[[:space:]]+		{ fprintf(yyout, ""); }
-[[:space:]]+$     { fprintf(yyout, ""); }
-[ \t]+				{ fprintf(yyout, " "); ++words; }
-[ \n]+				{ fprintf(yyout, "\n"); ++lines; ++words; }
-.                 { fprintf(yyout, "%s", yytext); }
+
+^[ \t]+\n			;
+^\n					;
+^[ \t]+/.		    ;
+[ \t]+				;
+[ \t]+/.			printf(" ");
+[^ \t\n]+		    ++num_words; ECHO;
+\n                  ++num_lines; ECHO;
+
 %%
-int yywrap(void){}
-int main() 
+
+int main()
 {
-   extern FILE *yyin, *yyout;
-   yyin = fopen("l2z1a.txt", "r");
-   yyout = fopen("a.txt", "w");
-   yylex();
-   printf("Number of words: %d \n", words);
-   printf("Number of lines: %d \n", lines);
-   return 0;
+	yylex();
+	fprintf(stderr, "Number of lines = %d\nNumber of words = %d\n", num_lines, num_words);
 }
